@@ -1,9 +1,14 @@
 "use client"
 
 import React from 'react';
+import Header from '../_components/Header';
+import Posts from '../_components/Posts';
 
 export default function Blog() {
     return (
-        <h1>Blog</h1>
+        <div>
+            <Header />
+            <Posts />
+        </div>
     )
 }

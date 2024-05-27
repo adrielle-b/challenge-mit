@@ -8,3 +8,9 @@ export type bodyRegister = {
     login: string;
     password: string;
 }
+
+export type bodyCreatePost = {
+    title: string;
+    content: string;
+    authorId: string;
+}
