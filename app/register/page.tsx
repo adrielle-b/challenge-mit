@@ -3,24 +3,30 @@
 import React from 'react';
 import { useState } from 'react';
 import { requestRegister } from '../services/requests';
+import Swal from 'sweetalert2';
 
 export default function Register() {
     const [name, setName] = useState('');
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [inputError, setInputError] = useState(false);
-    const [registerSuccess, setRegisterSuccess] = useState(false);
-    
-    const loginPage = () => {
-        window.location.href = '/';
-    }
 
     const register = async () => {
 
         try {
             await requestRegister('/users/create', { name, login: user, password});
-            setRegisterSuccess(true);
-            window.location.href = '/';
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Cadastro realizado com sucesso!',
+                showConfirmButton: false,
+                timer: 1500
+              });
+          
+              setTimeout(() => {
+                window.location.href = '/';
+              }, 1500);
+
         } catch (error) {
             setInputError(true);
         }
@@ -57,9 +63,8 @@ export default function Register() {
         </label>
         <button type='button' onClick={register}>Cadastrar</button>
         {inputError && <p>Preencha todos os campos ou digite uma senha válida.</p>}
-        {registerSuccess && <p>Cadastro realizado com sucesso.</p>}
         <p>Já tem uma conta?</p>
-        <button onClick={loginPage} type ='button'>Clique para fazer login</button>
+        <button onClick={() => window.location.href = '/'} type ='button'>Clique para fazer login</button>
       </div>
     );
 }
