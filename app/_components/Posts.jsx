@@ -2,9 +2,8 @@
 import React from 'react';
 import { decodeJWTFromLocalStorage } from '../services/decodeJwt';
 import { useState } from 'react';
-import { requestCreatePost, requestGetPosts } from '../services/requests';
+import { requestCreatePost, requestGetPosts, setToken } from '../services/requests';
 import { useEffect } from 'react';
-import CardPost from './CardPost';
 
 export default function Posts () {
     const [post, setPost] = useState({
@@ -18,8 +17,9 @@ export default function Posts () {
     useEffect(() => {
         (async () => {
             try {
+                setToken(localStorage.getItem('token'));
                 const response = await requestGetPosts('/posts/list');
-                setPosts(response.data);
+                setPosts(response);
             } catch (error) {
                 console.log(error);
             }
@@ -31,6 +31,7 @@ export default function Posts () {
             const token = localStorage.getItem('token');
             const { sign } = decodeJWTFromLocalStorage(token);
             setPost({...post, authorId: sign.sub});
+            setToken(token);
             await requestCreatePost('/posts/create', post)
             setPost({
                 title: '',
@@ -62,13 +63,11 @@ export default function Posts () {
             </section>
             <section>
                 {/* {loading && <p>Carregando...</p>} */}
-                {posts.map((post) => (
-                    <CardPost 
-                    key={post.id} 
-                    title={post.title} 
-                    content={post.content} 
-                    authorId={post.authorId} 
-                    />
+                {posts && posts.map(({authorId, title, content}) => (
+                    <div key={authorId}>
+                        <h1>{title}</h1>
+                        <p>{content}</p>
+                    </div>
                 ))}
             </section>
         </main>
