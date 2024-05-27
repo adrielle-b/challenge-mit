@@ -26,10 +26,6 @@ export default function Login() {
     }
   }
 
-  const registerPage = () => {
-    window.location.href = '/register';
-  }
-
     return (
       <div>
         <h1>Blog</h1>
@@ -57,7 +53,11 @@ export default function Login() {
         <button type='button' onClick={login}>Entrar</button>
         {failedLogin && <p>Login incorreto.</p>}
         <p>Não tem uma conta?</p>
-        <button type ='button' onClick={registerPage}>Clique para se cadastrar</button>
+        <button type ='button' 
+        onClick={() => window.location.href = '/register'}
+        >
+          Clique para se cadastrar
+        </button>
       </div>
     );
   }

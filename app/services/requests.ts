@@ -20,7 +20,7 @@ export const requestRegister = async (endpoint: string, body: bodyRegister) => {
 }
 
 export const requestCreatePost = async (endpoint: string, body: bodyCreatePost) => {
-    const { data } = await api.post(endpoint);
+    const { data } = await api.post(endpoint, body);
     return data;
 }
 

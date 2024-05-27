@@ -16,14 +16,14 @@ export default function Posts () {
     //const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getPosts = async () => {
+        (async () => {
             try {
                 const response = await requestGetPosts('/posts/list');
                 setPosts(response.data);
             } catch (error) {
                 console.log(error);
             }
-        }
+        })();
     }, []);
 
     const addPost = async () => {
