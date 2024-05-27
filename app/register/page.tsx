@@ -12,7 +12,7 @@ export default function Register() {
     const [registerSuccess, setRegisterSuccess] = useState(false);
     
     const loginPage = () => {
-        window.location.href = '/login';
+        window.location.href = '/';
     }
 
     const register = async () => {
@@ -20,7 +20,7 @@ export default function Register() {
         try {
             await requestRegister('/users/create', { name, login: user, password});
             setRegisterSuccess(true);
-            window.location.href = '/login';
+            window.location.href = '/';
         } catch (error) {
             setInputError(true);
         }
@@ -59,7 +59,7 @@ export default function Register() {
         {inputError && <p>Preencha todos os campos ou digite uma senha válida.</p>}
         {registerSuccess && <p>Cadastro realizado com sucesso.</p>}
         <p>Já tem uma conta?</p>
-        <button onClick={loginPage} type ='button'>Clique para fazer login.</button>
+        <button onClick={loginPage} type ='button'>Clique para fazer login</button>
       </div>
     );
 }
