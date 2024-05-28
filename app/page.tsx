@@ -26,7 +26,7 @@ export default function Login() {
 
     return (
       <main className="min-h-screen flex items-center justify-center bg-black">
-      <div className="bg-white shadow-lg p-8 rounded-lg max-w-md w-full">
+      <div className="bg-white shadow-lg shadow-blue-500/50 p-8 rounded-lg max-w-md w-full">
       <h1 className="text-center text-black text-2xl mb-6">Blog</h1>
         <h2 className="text-black text-xl mb-4">Login</h2>
         <label htmlFor="user" className="block text-black mb-2">
@@ -63,11 +63,11 @@ export default function Login() {
         <button
           type='button'
           onClick={() => window.location.href = '/register'}
-          className="w-full p-2 mt-2 bg-blue-600 text-white rounded transition duration-300 ease-in-out hover:bg-blue-500"
+          className="w-full p-2 mt-2 bg-blue-500 text-white rounded transition duration-300 ease-in-out hover:bg-blue-400"
         >
           Clique para se cadastrar
         </button>
-      </div>
-    </main>
+        </div>
+      </main>
     );
   }

@@ -1,14 +1,17 @@
 "use client"
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../_components/Header';
 import Posts from '../_components/Posts';
 
 export default function Blog() {
 
-    if (!localStorage.getItem('token')) {
-        window.location.href = '/';
-    }
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          window.location.href = '/';
+        }
+      }, []);
 
     return (
         <div>

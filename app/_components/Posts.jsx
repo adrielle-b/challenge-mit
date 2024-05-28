@@ -16,11 +16,11 @@ export default function Posts () {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        const { sign } = decodeJWTFromLocalStorage(token);
+        setIdLoggedUser(sign.sub);
         (async () => {
             try {
-                const token = localStorage.getItem('token');
-                const { sign } = decodeJWTFromLocalStorage(token);
-                setIdLoggedUser(sign.sub);
                 setToken(localStorage.getItem('token'));
                 const response = await requestGetPosts('/posts/list');
                 setPosts(response);
@@ -34,7 +34,8 @@ export default function Posts () {
     const addPost = async () => {
         try {        
             setPost({...post, authorId: idLoggedUser});
-            setToken(token);
+            console.log(post);           
+            setToken(localStorage.getItem('token'));
             await requestCreatePost('/posts/create', post)
             setPost({
                 title: '',
