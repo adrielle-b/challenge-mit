@@ -140,8 +140,8 @@ export default function Posts () {
             onClick={addPost}
         >Adicionar</button>
         </section>
+            {loading && <p className="text-blue-400 text-center">Carregando...</p>} 
         <section className="mt-12 max-w-7xl mx-auto grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-            {loading && <p className='text-blue-400 text-center'>Carregando...</p>} 
                 {posts && posts.map(({authorId, title, content, id}) => (
                     <div key={id} id={id} className="bg-black rounded-lg border border-blue-400 text-white shadow-lg overflow-hidden">
                         <div className="p-4">
