@@ -26,8 +26,9 @@ export default function EditModal({ post, show, onClose, onSave }: { post: PostE
         }
     };
 
-    return (
-        <div className={`fixed z-10 inset-0 overflow-y-auto ${show ? 'block' : 'hidden'}`}>
+    if (show) {
+        return (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
                 <div className="fixed inset-0 transition-opacity">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -56,4 +57,4 @@ export default function EditModal({ post, show, onClose, onSave }: { post: PostE
             </div>
         </div>
     );
-}
+}}
