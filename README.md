@@ -14,6 +14,7 @@ O desafio é uma aplicação de Blog que o usuário se cadastra e faz login para
 
 - NextJS v14.2.3
 - TailWindCSS
+- Typescript
 - Swal (alert de cadastro)
 
 
