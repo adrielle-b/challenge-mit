@@ -5,7 +5,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 
-export default function Modal({ show, onClose, onConfirm, postId }: { show: boolean, onClose: () => void, onConfirm: (postId: string) => void, postId: string }) {
+export default function ModalDel({ show, onClose, onConfirm, postId }: { show: boolean, onClose: () => void, onConfirm: (postId: string) => void, postId: string }) {
     if (show) {
         MySwal.fire({
             title: 'Tem certeza?',

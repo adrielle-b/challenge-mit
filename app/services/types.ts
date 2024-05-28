@@ -14,3 +14,8 @@ export type bodyCreatePost = {
     content: string;
     authorId: string;
 }
+
+export type bodyUpdatePost = {
+    title: string;
+    content: string;
+}

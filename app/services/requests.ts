@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { bodyCreatePost, bodyLogin, bodyRegister } from './types';
+import { bodyCreatePost, bodyLogin, bodyRegister, bodyUpdatePost } from './types';
 
 const api = axios.create({
   baseURL: 'http://localhost:8080',
@@ -31,5 +31,10 @@ export const requestGetPosts = async (endpoint: string) => {
 
 export const requestDeletePost = async (endpoint: string) => {
     const { data } = await api.delete(endpoint);
+    return data;
+}
+
+export const requestEditPost = async (endpoint: string, body: bodyUpdatePost) => {
+    const { data } = await api.patch(endpoint, body);
     return data;
 }

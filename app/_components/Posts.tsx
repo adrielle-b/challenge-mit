@@ -2,9 +2,11 @@
 import React from 'react';
 import { decodeJWTFromLocalStorage } from '../services/decodeJwt';
 import { useState } from 'react';
-import { requestCreatePost, requestGetPosts, setToken, requestDeletePost } from '../services/requests';
+import { requestCreatePost, requestGetPosts, setToken, requestDeletePost, requestEditPost } from '../services/requests';
 import { useEffect } from 'react';
-import Modal from './ModalDelete';
+import ModalDel from './ModalDelete';
+import { bodyCreatePost } from '../services/types';
+import ModalEdit from './ModalEdit';
 
 export default function Posts () {
     const [post, setPost] = useState({
@@ -15,8 +17,14 @@ export default function Posts () {
     const [posts, setPosts] = useState([]);
     const [idLoggedUser, setIdLoggedUser] = useState('');
     const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false);
+    const [showModalDel, setShowModalDel] = useState(false);
+    const [showModalEdit, setShowModalEdit] = useState(false);
     const [postIdDelete, setPostIdDelete] = useState('');
+    const [postEdit, setPostEdit] = useState({
+        title: '',
+        content: '',
+        id: ''
+    });
 
     useEffect(() => {
         (async () => {
@@ -54,13 +62,13 @@ export default function Posts () {
         }      
     };
 
-    const openModal = (id: string) => {
-        setShowModal(true);
+    const openModalDelete = (id: string) => {
+        setShowModalDel(true);
         setPostIdDelete(id);
     };
 
-    const closeModal = () => {
-        setShowModal(false);
+    const closeModalDel = () => {
+        setShowModalDel(false);
         setPostIdDelete('');
     };
 
@@ -71,7 +79,33 @@ export default function Posts () {
             await requestDeletePost(`/posts/delete/${id}`);
             const response = await requestGetPosts('/posts/list');
             setPosts(response);
-            closeModal();
+            closeModalDel();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const openModalEdit = (title: string, content: string, id: string) => {
+        setShowModalEdit(true);
+        setPostEdit({title, content, id});
+    };
+
+    const closeModalEdit = () => {
+        setShowModalEdit(false);
+        setPostEdit({
+            title: '',
+            content: '',
+            id: ''
+        });
+    }
+    
+    const saveEditedPost = async (id: string, postEdit: {title : string, content: string}) => {
+        try {
+            const token = localStorage.getItem('token');
+            setToken(token);
+            await requestEditPost(`/posts/edit/${id}`, postEdit);
+            const response = await requestGetPosts('/posts/list');
+            setPosts(response);
         } catch (error) {
             console.log(error);
         }
@@ -102,16 +136,27 @@ export default function Posts () {
                         <p>{content}</p>
                         {idLoggedUser === authorId && (
                         <div>
-                            <button>Editar</button>
                             <button
                             type="button"
-                            onClick={() => openModal(id)}
+                            onClick={() => openModalEdit(title, content, id)}
                             >
-                            Excluir
+                                Editar
                             </button>
-                            <Modal 
-                            show={showModal} 
-                            onClose={closeModal} 
+                            <ModalEdit
+                            show={showModalEdit}
+                            post={postEdit}
+                            onClose={closeModalEdit}
+                            onSave={(editedPost) => saveEditedPost(id, editedPost)}
+                            />
+                            <button
+                            type="button"
+                            onClick={() => openModalDelete(id)}
+                            >
+                                Excluir
+                            </button>
+                            <ModalDel
+                            show={showModalDel} 
+                            onClose={closeModalDel} 
                             onConfirm={confirmDelete}
                             postId={postIdDelete}
                             />
