@@ -1,28 +1,34 @@
 "use client";
+// components/ModalDel.js
 import React from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-
-const MySwal = withReactContent(Swal);
 
 export default function ModalDel({ show, onClose, onConfirm, postId }: { show: boolean, onClose: () => void, onConfirm: (postId: string) => void, postId: string }) {
+
     if (show) {
-        MySwal.fire({
-            title: 'Tem certeza?',
-            text: 'Você não poderá reverter isso!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, excluir!',
-            cancelButtonText: 'Não, cancelar',
-        }).then((result: { isConfirmed: any; }) => {
-            if (result.isConfirmed) {
-                onConfirm(postId);
-            } else {
-                onClose();
-            }
-        });
+        return (
+            <div className="fixed z-10 inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+                    <div className="fixed inset-0 transition-opacity">
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                    </div>
+                    <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                    <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div className="sm:flex sm:items-start">
+                                <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">Tem certeza?</h3>
+                                    <p className="text-sm text-gray-500 mb-4">Você não poderá reverter isso!</p>
+                                    <div className="flex justify-center">
+                                        <button onClick={() => { onConfirm(postId); onClose(); }} className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Sim, excluir!</button>
+                                        <button onClick={onClose} className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return null;
