@@ -10,7 +10,7 @@ export const requestLogin = async (endpoint: string, body: bodyLogin) => {
     return data;
 }
 
-export const setToken = (token: string) => {
+export const setToken = (token: string | null) => {
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
@@ -26,5 +26,10 @@ export const requestCreatePost = async (endpoint: string, body: bodyCreatePost) 
 
 export const requestGetPosts = async (endpoint: string) => {
     const { data } = await api.get(endpoint);
+    return data;
+}
+
+export const requestDeletePost = async (endpoint: string) => {
+    const { data } = await api.delete(endpoint);
     return data;
 }

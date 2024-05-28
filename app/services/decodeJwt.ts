@@ -1,6 +1,4 @@
-export const decodeJWTFromLocalStorage = () => {
-    const token = localStorage.getItem('token');
-  
+export const decodeJWTFromLocalStorage = (token: string | null) => {  
     if (!token) {
       console.error('Token JWT não encontrado');
       return null;
