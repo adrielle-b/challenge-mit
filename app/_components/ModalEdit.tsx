@@ -13,17 +13,17 @@ export default function EditModal({ post, show, onClose, onSave }: { post: PostE
 
     const handleChange = (e: { target: { name: string; value: string; }; }) => {
         const { name, value } = e.target;
-        if (!name|| !value) {
-            setInvalidPost(true);
-        } else {
-            setInvalidPost(false);
-            setEditedPost({ ...editedPost, [name]: value });
-        }
+        setEditedPost({ ...editedPost, [name]: value });
     };
 
     const handleSave = () => {
-        onSave(editedPost);
-        onClose();
+        if (!editedPost.title || !editedPost.content) {
+            setInvalidPost(true);
+        } else {
+            setInvalidPost(false);
+            onSave(editedPost);
+            onClose();
+        }
     };
 
     return (
