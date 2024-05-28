@@ -1,5 +1,4 @@
 "use client";
-// components/ModalDel.js
 import React from 'react';
 
 export default function ModalDel({ show, onClose, onConfirm, postId }: { show: boolean, onClose: () => void, onConfirm: (postId: string) => void, postId: string }) {

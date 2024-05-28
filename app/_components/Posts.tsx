@@ -117,8 +117,8 @@ export default function Posts () {
     };
 
     return (
-        <main className="bg-black text-gray-300 p-8">
-        <section className="max-w-4xl mx-auto">
+    <main className="bg-black text-gray-300 p-8">
+      <section className="max-w-4xl mx-auto">
         <p className="text-blue-300 mb-4">Adicione um post:</p>
         <input type="text" 
             name="title"
@@ -139,15 +139,15 @@ export default function Posts () {
             className="bg-blue-500 bg-opacity-70 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             onClick={addPost}
         >Adicionar</button>
-        </section>
+      </section>
             {loading && <p className="text-blue-400 text-center">Carregando...</p>} 
-        <section className="mt-12 max-w-7xl mx-auto grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-                {posts && posts.map(({authorId, title, content, id}) => (
-                    <div key={id} id={id} className="bg-black rounded-lg border border-blue-400 text-white shadow-lg overflow-hidden">
-                        <div className="p-4">
-                            <h1 className="text-xl font-bold mb-2">{title}</h1>
-                            <p className="mb-4">{content}</p>
-                        {idLoggedUser === authorId && (
+      <section className="mt-12 max-w-7xl mx-auto grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+            {posts && posts.map(({authorId, title, content, id}) => (
+                <div key={id} id={id} className="bg-black rounded-lg border border-blue-400 text-white shadow-lg overflow-hidden">
+                    <div className="p-4">
+                        <h1 className="text-xl font-bold mb-2">{title}</h1>
+                        <p className="mb-4">{content}</p>
+                    {idLoggedUser === authorId && (
                         <div className="flex justify-end p-3">
                             <button
                             type="button"
