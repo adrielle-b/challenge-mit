@@ -9,10 +9,16 @@ type PostEdit = {
 
 export default function EditModal({ post, show, onClose, onSave }: { post: PostEdit, show: boolean, onClose: () => void, onSave: (post: PostEdit) => void }) {
     const [editedPost, setEditedPost] = useState(post);
+    const [invalidPost, setInvalidPost] = useState(false);
 
     const handleChange = (e: { target: { name: string; value: string; }; }) => {
         const { name, value } = e.target;
-        setEditedPost({ ...editedPost, [name]: value });
+        if (!name|| !value) {
+            setInvalidPost(true);
+        } else {
+            setInvalidPost(false);
+            setEditedPost({ ...editedPost, [name]: value });
+        }
     };
 
     const handleSave = () => {
@@ -38,6 +44,7 @@ export default function EditModal({ post, show, onClose, onSave }: { post: PostE
                                 <div>
                                     <textarea name="content" value={editedPost.content} onChange={handleChange} className="mb-2 px-3 py-2 border rounded-md w-full text-black"></textarea>
                                 </div>
+                                {invalidPost && <p className="text-red-500 mb-2">Preencha todos os campos</p>}
                             </div>
                         </div>
                     </div>
