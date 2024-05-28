@@ -14,7 +14,7 @@ export default function Blog() {
       }, []);
 
     return (
-        <div>
+        <div className="min-h-screen bg-black">
             <Header />
             <Posts />
         </div>

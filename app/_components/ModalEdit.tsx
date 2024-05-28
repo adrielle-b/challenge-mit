@@ -24,7 +24,7 @@ export default function EditModal({ post, show, onClose, onSave }: { post: PostE
         <div className={`fixed z-10 inset-0 overflow-y-auto ${show ? 'block' : 'hidden'}`}>
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
                 <div className="fixed inset-0 transition-opacity">
-                    <div className="absolute inset-0 bg-black opacity-75"></div>
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
                 </div>
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
                 <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -33,10 +33,10 @@ export default function EditModal({ post, show, onClose, onSave }: { post: PostE
                             <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                                 <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">Editar Post</h3>
                                 <div>
-                                    <input type="text" name="title" value={editedPost.title} onChange={handleChange} className="mb-2 px-3 py-2 border rounded-md w-full" />
+                                    <input type="text" name="title" value={editedPost.title} onChange={handleChange} className="mb-2 px-3 py-2 border rounded-md w-full text-black" />
                                 </div>
                                 <div>
-                                    <textarea name="content" value={editedPost.content} onChange={handleChange} className="mb-2 px-3 py-2 border rounded-md w-full"></textarea>
+                                    <textarea name="content" value={editedPost.content} onChange={handleChange} className="mb-2 px-3 py-2 border rounded-md w-full text-black"></textarea>
                                 </div>
                             </div>
                         </div>

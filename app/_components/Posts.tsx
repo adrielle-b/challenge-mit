@@ -112,33 +112,41 @@ export default function Posts () {
     };
 
     return (
-        <main>
-            <section>
-                <p>Adicione um post:</p>
-                <input type="text" 
-                name="title"
-                placeholder="Título"
-                onChange={(e) => setPost({...post, title: e.target.value})}
-                />
-                <textarea 
-                name="content"
-                placeholder="Digite seu post"
-                onChange={(e) => setPost({...post, content: e.target.value})}
-                >
-                </textarea>
-                <button type="button" onClick={addPost}>Adicionar</button>
-            </section>
-            <section>
-                {loading && <p>Carregando...</p>} 
+        <main className="bg-black text-gray-300 p-8">
+        <section className="max-w-4xl mx-auto">
+        <p className="text-blue-300 mb-4">Adicione um post:</p>
+        <input type="text" 
+            name="title"
+            className="w-full bg-gray-700 bg-opacity-50 text-white placeholder-gray-400 border border-gray-700 rounded-md px-4 py-2 mb-4 focus:outline-none focus:ring focus:border-blue-300"
+            value={post.title}
+            placeholder="Título"
+            onChange={(e) => setPost({...post, title: e.target.value})}
+        />
+        <textarea 
+            name="content"
+            className="w-full bg-gray-700 bg-opacity-50 text-white placeholder-gray-400 border border-gray-700 rounded-md px-4 py-2 mb-4 focus:outline-none focus:ring focus:border-blue-300"
+            value={post.content}
+            placeholder="Digite seu post"
+            onChange={(e) => setPost({...post, content: e.target.value})}
+        ></textarea>
+        <button type="button" 
+            className="bg-blue-500 bg-opacity-70 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            onClick={addPost}
+        >Adicionar</button>
+        </section>
+        <section className="mt-12 max-w-7xl mx-auto grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+            {loading && <p className='text-blue-400 text-center'>Carregando...</p>} 
                 {posts && posts.map(({authorId, title, content, id}) => (
-                    <div key={id} id={id}>
-                        <h1>{title}</h1>
-                        <p>{content}</p>
+                    <div key={id} id={id} className="bg-black rounded-lg border border-blue-400 text-white shadow-lg overflow-hidden">
+                        <div className="p-4">
+                            <h1 className="text-xl font-bold mb-2">{title}</h1>
+                            <p className="mb-4">{content}</p>
                         {idLoggedUser === authorId && (
-                        <div>
+                        <div className="flex justify-end p-3">
                             <button
                             type="button"
                             onClick={() => openModalEdit(title, content, id)}
+                            className="text-sm bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mr-2"
                             >
                                 Editar
                             </button>
@@ -151,6 +159,7 @@ export default function Posts () {
                             <button
                             type="button"
                             onClick={() => openModalDelete(id)}
+                            className="text-sm bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
                             >
                                 Excluir
                             </button>
@@ -162,6 +171,7 @@ export default function Posts () {
                             />
                         </div>
                         )}
+                    </div>
                     </div>
                 ))}
             </section>

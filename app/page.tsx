@@ -63,7 +63,7 @@ export default function Login() {
         <button
           type='button'
           onClick={() => window.location.href = '/register'}
-          className="w-full p-2 mt-2 bg-blue-500 text-white rounded transition duration-300 ease-in-out hover:bg-blue-400"
+          className="w-full p-2 mt-2 bg-blue-500 text-white rounded transition duration-300 ease-in-out hover:bg-blue-600"
         >
           Clique para se cadastrar
         </button>
