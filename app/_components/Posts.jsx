@@ -12,14 +12,19 @@ export default function Posts () {
         authorId: ''
     });
     const [posts, setPosts] = useState([]);
-    //const [loading, setLoading] = useState(true);
+    const [idLoggedUser, setIdLoggedUser] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
             try {
+                const token = localStorage.getItem('token');
+                const { sign } = decodeJWTFromLocalStorage(token);
+                setIdLoggedUser(sign.sub);
                 setToken(localStorage.getItem('token'));
                 const response = await requestGetPosts('/posts/list');
                 setPosts(response);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -27,10 +32,8 @@ export default function Posts () {
     }, []);
 
     const addPost = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const { sign } = decodeJWTFromLocalStorage(token);
-            setPost({...post, authorId: sign.sub});
+        try {        
+            setPost({...post, authorId: idLoggedUser});
             setToken(token);
             await requestCreatePost('/posts/create', post)
             setPost({
@@ -62,11 +65,17 @@ export default function Posts () {
                 <button type="button" onClick={addPost}>Adicionar</button>
             </section>
             <section>
-                {/* {loading && <p>Carregando...</p>} */}
+                {loading && <p>Carregando...</p>} 
                 {posts && posts.map(({authorId, title, content}) => (
-                    <div key={authorId}>
+                    <div key={authorId} id={authorId}>
                         <h1>{title}</h1>
                         <p>{content}</p>
+                        {idLoggedUser === authorId && (
+                        <div>
+                            <button>Editar</button>
+                            <button>Excluir</button>
+                        </div>
+                        )}
                     </div>
                 ))}
             </section>
