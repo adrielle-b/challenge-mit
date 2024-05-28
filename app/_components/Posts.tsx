@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { requestCreatePost, requestGetPosts, setToken, requestDeletePost, requestEditPost } from '../services/requests';
 import { useEffect } from 'react';
 import ModalDel from './ModalDelete';
-import { bodyCreatePost } from '../services/types';
 import ModalEdit from './ModalEdit';
 
 export default function Posts () {
@@ -16,6 +15,7 @@ export default function Posts () {
     });
     const [posts, setPosts] = useState([]);
     const [idLoggedUser, setIdLoggedUser] = useState('');
+    const [invalidPost, setInvalidPost] = useState(false);
     const [loading, setLoading] = useState(true);
     const [showModalDel, setShowModalDel] = useState(false);
     const [showModalEdit, setShowModalEdit] = useState(false);
@@ -43,19 +43,24 @@ export default function Posts () {
     }, []);
 
     const addPost = async () => {
-        try {        
-            const token = localStorage.getItem('token');
-            const { sign } = decodeJWTFromLocalStorage(token);
-            setPost({...post, authorId: sign.sub});          
-            setToken(token);
-            await requestCreatePost('/posts/create', post)
-            const response = await requestGetPosts('/posts/list');
-            setPosts(response);
-            setPost({
-                title: '',
-                content: '',
-                authorId: '',
-            })
+        try {
+            if (!post.title || !post.content) {
+                setInvalidPost(true);
+            } else {
+                setInvalidPost(false);
+                const token = localStorage.getItem('token');
+                const { sign } = decodeJWTFromLocalStorage(token);
+                setPost({...post, authorId: sign.sub});          
+                setToken(token);
+                await requestCreatePost('/posts/create', post)
+                const response = await requestGetPosts('/posts/list');
+                setPosts(response);
+                setPost({
+                    title: '',
+                    content: '',
+                    authorId: '',
+                })
+            }
 
         } catch (error) {
             console.log(error);
@@ -129,6 +134,7 @@ export default function Posts () {
             placeholder="Digite seu post"
             onChange={(e) => setPost({...post, content: e.target.value})}
         ></textarea>
+        {invalidPost && <p className="text-red-500 mb-2">Preencha todos os campos</p>}
         <button type="button" 
             className="bg-blue-500 bg-opacity-70 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             onClick={addPost}
