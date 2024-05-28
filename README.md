@@ -2,7 +2,7 @@
 
 > FrontEnd Challenge to build a Login/Register/Home page with NextJS
 
-O desafio é uma aplicação de Blog, onde o usuário se cadastra e faz login para visualizar as postagens. O usuário pode adicionar, editar e excluir seus posts.
+O desafio é uma aplicação de Blog que o usuário se cadastra e faz login para visualizar as postagens. Ele pode adicionar, editar e excluir seus posts.
 
 ### Rotas
 
