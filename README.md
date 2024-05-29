@@ -16,6 +16,7 @@ O desafio é uma aplicação de Blog que o usuário se cadastra e faz login para
 - TailWindCSS
 - Typescript
 - Axios
+- ESLint
 - Swal (alert de cadastro)
 
 
