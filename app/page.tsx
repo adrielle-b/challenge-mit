@@ -28,7 +28,8 @@ export default function Login() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-black">
       <div
-        className="bg-white shadow-lg shadow-blue-500/50 p-8 rounded-lg max-w-md w-full"
+        className="bg-gray-600 shadow-lg shadow-blue-500/50 p-8 rounded-lg max-w-md
+        w-full"
       >
         <h1 className="text-center text-black text-2xl mb-6">Blog</h1>
         <h2 className="text-black text-xl mb-4">Login</h2>
