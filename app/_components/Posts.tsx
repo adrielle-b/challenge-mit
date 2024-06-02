@@ -54,9 +54,10 @@ export default function Posts() {
         setInvalidPost(false);
         const token = localStorage.getItem('token');
         const { sign } = decodeJWTFromLocalStorage(token);
-        setPost({ ...post, authorId: sign.sub });
+        const postData = { ...post, authorId: sign.sub };
+
         setToken(token);
-        await requestCreatePost('/posts/create', post);
+        await requestCreatePost('/posts/create', postData);
         const response = await requestGetPosts(endpointList);
         setPosts(response);
         setPost({
