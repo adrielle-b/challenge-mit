@@ -6,7 +6,7 @@ import { requestCreatePost, requestGetPosts,
   setToken, requestDeletePost, requestEditPost } from '../services/requests';
 import ModalDel from './ModalDelete';
 import ModalEdit from './ModalEdit';
-import { bodyUpdatePost } from '../services/types';
+import { bodyUpdatePost, Post } from '../services/types';
 
 export default function Posts() {
   const [post, setPost] = useState({
@@ -14,7 +14,7 @@ export default function Posts() {
     content: '',
     authorId: '',
   });
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [idLoggedUser, setIdLoggedUser] = useState('');
   const [invalidPost, setInvalidPost] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -26,6 +26,7 @@ export default function Posts() {
     content: '',
     id: '',
   });
+  const [searchTitle, setSearchTitle] = useState('');
 
   const endpointList = '/posts/list';
 
@@ -145,61 +146,76 @@ export default function Posts() {
           type="button"
           className="bg-blue-500 bg-opacity-70 hover:bg-blue-600 text-white
           font-bold py-2 px-4 rounded"
-          onClick={ () => addPost() }
+          onClick={ addPost }
         >
           Adicionar
         </button>
       </section>
+      <section className="flex justify-center mt-6">
+        <input
+          type="text"
+          name="searchTitle"
+          value={ searchTitle }
+          onChange={ (e) => setSearchTitle(e.target.value) }
+          className="w-1/2 bg-gray-700 bg-opacity-50 text-white placeholder-gray-400
+        border border-gray-700 rounded-md px-4 py-2 mb-4 focus:outline-none
+        focus:ring focus:border-blue-300"
+          placeholder="Pesquisar pelo título"
+        />
+      </section>
+
       {loading && <p className="text-blue-400 text-center">Carregando...</p>}
       <section
         className="mt-12 max-w-7xl mx-auto grid gap-6 lg:grid-cols-2
       xl:grid-cols-3"
       >
-        {posts && posts.map(({ authorId, title, content, id }) => (
-          <div
-            key={ id }
-            id={ id }
-            className="bg-black rounded-lg border border-blue-400text-white shadow-lg
+        {posts && posts
+          .filter(({ title }) => title.toLowerCase().includes(searchTitle.toLowerCase()))
+          .map(({ authorId, title, content, id }) => (
+            <div
+              key={ id }
+              id={ id }
+              className="bg-black rounded-lg border border-blue-400text-white shadow-lg
             overflow-hidden"
-          >
-            <div className="p-4">
-              <h1 className="text-xl font-bold mb-2">{title}</h1>
-              <p className="mb-4">{content}</p>
-              {idLoggedUser === authorId && (
-                <div className="flex justify-end p-3">
-                  <button
-                    type="button"
-                    onClick={ () => openModalEdit(title, content, id) }
-                    className="text-sm bg-blue-500 hover:bg-blue-600 text-white font-bold
-                    py-1 px-2 rounded mr-2"
-                  >
-                    Editar
-                  </button>
-                  <ModalEdit
-                    show={ showModalEdit }
-                    post={ postEdit }
-                    onClose={ closeModalEdit }
-                    onSave={ (editedPost) => saveEditedPost(id, editedPost) }
-                  />
-                  <button
-                    type="button"
-                    onClick={ () => openModalDelete(id) }
-                    className="text-sm bg-red-500 hover:bg-red-600 text-white font-bold
+            >
+              <div className="p-4">
+                <h1 className="text-xl font-bold mb-2">{title}</h1>
+                <p className="mb-4">{content}</p>
+                {idLoggedUser === authorId && (
+                  <div className="flex justify-end p-3">
+                    <button
+                      type="button"
+                      onClick={ () => openModalEdit(title, content, id) }
+                      className="text-sm bg-blue-500 hover:bg-blue-600 text-white
+                      font-bold py-1 px-2 rounded mr-2"
+                    >
+                      Editar
+                    </button>
+                    <ModalEdit
+                      show={ showModalEdit }
+                      post={ postEdit }
+                      onClose={ closeModalEdit }
+                      onSave={ (editedPost) => saveEditedPost(id, editedPost) }
+                    />
+                    <button
+                      type="button"
+                      onClick={ () => openModalDelete(id) }
+                      className="text-sm bg-red-500 hover:bg-red-600 text-white font-bold
                     py-1 px-2 rounded"
-                  >
-                    Excluir
-                  </button>
-                  <ModalDel
-                    show={ showModalDel }
-                    onClose={ closeModalDel }
-                    onConfirm={ confirmDelete }
-                    postId={ postIdDelete }
-                  />
-                </div>
-              )}
+                    >
+                      Excluir
+                    </button>
+                    <ModalDel
+                      show={ showModalDel }
+                      onClose={ closeModalDel }
+                      onConfirm={ confirmDelete }
+                      postId={ postIdDelete }
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </section>
     </main>
   );

@@ -19,3 +19,10 @@ export type bodyUpdatePost = {
   title: string;
   content: string;
 };
+
+export type Post = {
+  title: string;
+  content: string;
+  id: string;
+  authorId: string;
+};
